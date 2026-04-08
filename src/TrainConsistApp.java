@@ -1,32 +1,27 @@
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class TrainConsistApp {
-
     public static void main(String[] args) {
+        // Create a HashSet for unique bogie IDs
+        Set<String> bogieIds = new HashSet<>();
 
-        System.out.println("UC2 - Add Passenger Bogies to Train");
-        System.out.println("=================================\n");
+        System.out.println("--- Train Consist Management System ---");
+        System.out.println("Scenario: Adding Bogie IDs to the Train (UC3)");
 
-        ArrayList<String> passengerBogies = new ArrayList<>();
+        // Adding unique and duplicate bogie IDs
+        bogieIds.add("BG101");
+        bogieIds.add("BG102");
+        bogieIds.add("BG101"); // Duplicate - will be ignored
+        bogieIds.add("BG103");
+        bogieIds.add("BG102"); // Duplicate - will be ignored
 
-        passengerBogies.add("Sleeper");
-        passengerBogies.add("AC Chair");
-        passengerBogies.add("First Class");
+        // Display the final set of unique bogie IDs
+        System.out.println("\nFinal List of Unique Bogie IDs:");
+        System.out.println(bogieIds);
 
-        System.out.println("After Adding Bogies:");
-        System.out.println("Passenger Bogies : " + passengerBogies + "\n");
-
-        passengerBogies.remove("AC Chair");
-
-        System.out.println("After Removing 'AC Chair':");
-        System.out.println("Passenger Bogies : " + passengerBogies + "\n");
-
-        System.out.println("Checking if 'Sleeper' exists:");
-        System.out.println("Contains Sleeper? : " + passengerBogies.contains("Sleeper") + "\n");
-
-        System.out.println("Final Train Passenger Consist:");
-        System.out.println(passengerBogies + "\n");
-
-        System.out.println("UC2 operations completed successfully...");
+        // Verification logic
+        System.out.println("\nNotice: Duplicate IDs like 'BG101' and 'BG102' were automatically removed.");
+        System.out.println("Total Unique Bogies: " + bogieIds.size());
     }
 }

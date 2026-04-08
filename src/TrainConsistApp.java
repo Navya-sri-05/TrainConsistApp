@@ -1,43 +1,51 @@
 import java.util.*;
-import java.util.stream.*;
+import java.util.stream.Collectors;
 
 public class TrainConsistApp {
 
     public static void main(String[] args) {
 
-        System.out.println("UC12 - Safety Compliance Check for Goods Bogies");
-        System.out.println("==============================================\n");
+        System.out.println("UC13 - Performance Comparison (Loops vs Streams)");
+        System.out.println("================================================\n");
 
-        // Step 1: Create goods bogies (type + cargo)
-        List<Map.Entry<String, String>> bogies = new ArrayList<>();
+        // Step 1: Create large dataset
+        List<Map.Entry<String, Integer>> bogies = new ArrayList<>();
 
-        bogies.add(new AbstractMap.SimpleEntry<>("Cylindrical", "Petroleum"));
-        bogies.add(new AbstractMap.SimpleEntry<>("Open", "Coal"));
-        bogies.add(new AbstractMap.SimpleEntry<>("Box", "Grain"));
-        bogies.add(new AbstractMap.SimpleEntry<>("Cylindrical", "Coal")); // ❌ invalid
-
-        // Step 2: Print bogies
-        System.out.println("Goods Bogies in Train:");
-        for (Map.Entry<String, String> b : bogies) {
-            System.out.println(b.getKey() + " -> " + b.getValue());
+        for (int i = 0; i < 100000; i++) {
+            bogies.add(new AbstractMap.SimpleEntry<>("Sleeper", 72));
+            bogies.add(new AbstractMap.SimpleEntry<>("AC Chair", 56));
+            bogies.add(new AbstractMap.SimpleEntry<>("First Class", 24));
+            bogies.add(new AbstractMap.SimpleEntry<>("General", 90));
         }
 
-        // Step 3: Safety validation using allMatch
-        boolean isSafe = bogies.stream()
-                .allMatch(b ->
-                        !b.getKey().equals("Cylindrical") ||
-                                b.getValue().equals("Petroleum")
-                );
+        // ---------------- LOOP ----------------
+        long startLoop = System.nanoTime();
 
-        // Step 4: Output result
-        System.out.println("\nSafety Compliance Status: " + isSafe);
-
-        if (isSafe) {
-            System.out.println("Train formation is SAFE.");
-        } else {
-            System.out.println("Train formation is NOT SAFE.");
+        List<Map.Entry<String, Integer>> loopResult = new ArrayList<>();
+        for (Map.Entry<String, Integer> b : bogies) {
+            if (b.getValue() > 60) {
+                loopResult.add(b);
+            }
         }
 
-        System.out.println("\nUC12 safety validation completed...");
+        long endLoop = System.nanoTime();
+        long loopTime = endLoop - startLoop;
+
+        // ---------------- STREAM ----------------
+        long startStream = System.nanoTime();
+
+        List<Map.Entry<String, Integer>> streamResult =
+                bogies.stream()
+                        .filter(b -> b.getValue() > 60)
+                        .collect(Collectors.toList());
+
+        long endStream = System.nanoTime();
+        long streamTime = endStream - startStream;
+
+        // Output
+        System.out.println("Loop Execution Time (ns): " + loopTime);
+        System.out.println("Stream Execution Time (ns): " + streamTime);
+
+        System.out.println("\nUC13 performance benchmarking completed...");
     }
 }

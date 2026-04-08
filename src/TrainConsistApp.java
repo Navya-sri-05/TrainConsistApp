@@ -5,42 +5,31 @@ public class TrainConsistApp {
 
     public static void main(String[] args) {
 
-        System.out.println("UC9 - Group Bogies by Type");
-        System.out.println("=================================\n");
+        System.out.println("UC10 - Count Total Seats in Train");
+        System.out.println("====================================\n");
 
-        // Step 1: Create list (name + capacity)
+        // Step 1: Create list
         List<Map.Entry<String, Integer>> bogies = new ArrayList<>();
 
         bogies.add(new AbstractMap.SimpleEntry<>("Sleeper", 72));
         bogies.add(new AbstractMap.SimpleEntry<>("AC Chair", 56));
         bogies.add(new AbstractMap.SimpleEntry<>("First Class", 24));
         bogies.add(new AbstractMap.SimpleEntry<>("Sleeper", 70));
-        bogies.add(new AbstractMap.SimpleEntry<>("AC Chair", 60));
 
-        // Step 2: Print all bogies
-        System.out.println("All Bogies:");
+        // Step 2: Print bogies
+        System.out.println("Bogies in Train:");
         for (Map.Entry<String, Integer> b : bogies) {
             System.out.println(b.getKey() + " -> " + b.getValue());
         }
 
-        // Step 3: Group using Streams
-        Map<String, List<Map.Entry<String, Integer>>> grouped =
-                bogies.stream()
-                        .collect(Collectors.groupingBy(Map.Entry::getKey));
+        // Step 3: Calculate total using map + reduce
+        int totalSeats = bogies.stream()
+                .map(entry -> entry.getValue())   // extract capacity
+                .reduce(0, Integer::sum);        // sum all values
 
-        // Step 4: Print grouped output
-        System.out.println("\nGrouped Bogies:\n");
+        // Step 4: Print result
+        System.out.println("\nTotal Seating Capacity of Train: " + totalSeats);
 
-        for (String type : grouped.keySet()) {
-            System.out.println("Bogie Type: " + type);
-
-            for (Map.Entry<String, Integer> b : grouped.get(type)) {
-                System.out.println("Capacity -> " + b.getValue());
-            }
-
-            System.out.println();
-        }
-
-        System.out.println("UC9 grouping completed...");
+        System.out.println("\nUC10 aggregation completed...");
     }
 }

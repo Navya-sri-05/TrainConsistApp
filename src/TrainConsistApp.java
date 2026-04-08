@@ -1,35 +1,39 @@
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.regex.*;
 
 public class TrainConsistApp {
 
     public static void main(String[] args) {
 
-        System.out.println("UC10 - Count Total Seats in Train");
-        System.out.println("====================================\n");
+        System.out.println("UC11 - Validate Train ID & Cargo Codes");
+        System.out.println("========================================\n");
 
-        // Step 1: Create list
-        List<Map.Entry<String, Integer>> bogies = new ArrayList<>();
+        // Sample inputs (you can change to test)
+        String trainId = "TRN-1234";
+        String cargoCode = "PET-AB";
 
-        bogies.add(new AbstractMap.SimpleEntry<>("Sleeper", 72));
-        bogies.add(new AbstractMap.SimpleEntry<>("AC Chair", 56));
-        bogies.add(new AbstractMap.SimpleEntry<>("First Class", 24));
-        bogies.add(new AbstractMap.SimpleEntry<>("Sleeper", 70));
+        // Regex patterns
+        String trainPattern = "TRN-\\d{4}";
+        String cargoPattern = "PET-[A-Z]{2}";
 
-        // Step 2: Print bogies
-        System.out.println("Bogies in Train:");
-        for (Map.Entry<String, Integer> b : bogies) {
-            System.out.println(b.getKey() + " -> " + b.getValue());
-        }
+        // Compile patterns
+        Pattern trainRegex = Pattern.compile(trainPattern);
+        Pattern cargoRegex = Pattern.compile(cargoPattern);
 
-        // Step 3: Calculate total using map + reduce
-        int totalSeats = bogies.stream()
-                .map(entry -> entry.getValue())   // extract capacity
-                .reduce(0, Integer::sum);        // sum all values
+        // Create matchers
+        Matcher trainMatcher = trainRegex.matcher(trainId);
+        Matcher cargoMatcher = cargoRegex.matcher(cargoCode);
 
-        // Step 4: Print result
-        System.out.println("\nTotal Seating Capacity of Train: " + totalSeats);
+        // Validate using matches()
+        boolean isTrainValid = trainMatcher.matches();
+        boolean isCargoValid = cargoMatcher.matches();
 
-        System.out.println("\nUC10 aggregation completed...");
+        // Output
+        System.out.println("Train ID: " + trainId);
+        System.out.println("Is Train ID Valid? : " + isTrainValid);
+
+        System.out.println("\nCargo Code: " + cargoCode);
+        System.out.println("Is Cargo Code Valid? : " + isCargoValid);
+
+        System.out.println("\nUC11 validation completed...");
     }
 }

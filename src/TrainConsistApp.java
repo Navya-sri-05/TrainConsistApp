@@ -1,37 +1,37 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class TrainConsistApp {
 
     public static void main(String[] args) {
 
-        System.out.println("UC7 - Sort Bogies by Capacity (Comparator)");
+        System.out.println("UC8 - Filter Passenger Bogies Using Streams");
         System.out.println("===========================================\n");
 
-        // Step 1: Create HashMap (Bogie → Capacity)
-        Map<String, Integer> bogies = new HashMap<>();
+        // Step 1: Create list of bogies (name + capacity)
+        Map<String, Integer> bogies = new LinkedHashMap<>();
         bogies.put("Sleeper", 72);
         bogies.put("AC Chair", 56);
         bogies.put("First Class", 24);
         bogies.put("General", 90);
 
-        // Step 2: Print before sorting
-        System.out.println("Before Sorting:");
-        for (Map.Entry<String, Integer> entry : bogies.entrySet()) {
-            System.out.println(entry.getKey() + " -> " + entry.getValue());
-        }
+        // Step 2: Display all bogies
+        System.out.println("All Bogies:");
+        bogies.forEach((name, capacity) ->
+                System.out.println(name + " -> " + capacity));
 
-        // Step 3: Convert to List for sorting
-        List<Map.Entry<String, Integer>> list = new ArrayList<>(bogies.entrySet());
+        // Step 3: Filter using Stream (capacity > 60)
+        List<Map.Entry<String, Integer>> filtered =
+                bogies.entrySet()
+                        .stream()
+                        .filter(entry -> entry.getValue() > 60)
+                        .collect(Collectors.toList());
 
-        // Step 4: Sort using Comparator (by value)
-        list.sort(Comparator.comparingInt(Map.Entry::getValue));
+        // Step 4: Display filtered bogies
+        System.out.println("\nFiltered Bogies (Capacity > 60):");
+        filtered.forEach(entry ->
+                System.out.println(entry.getKey() + " -> " + entry.getValue()));
 
-        // Step 5: Print after sorting
-        System.out.println("\nAfter Sorting by Capacity:");
-        for (Map.Entry<String, Integer> entry : list) {
-            System.out.println(entry.getKey() + " -> " + entry.getValue());
-        }
-
-        System.out.println("\nUC7 sorting completed...");
+        System.out.println("\nUC8 filtering completed...");
     }
 }

@@ -1,42 +1,28 @@
+import java.util.Arrays;
+
 public class TrainConsistApp {
 
     public static void main(String[] args) {
 
-        System.out.println("UC16 - Manual Sorting using Bubble Sort");
-        System.out.println("========================================\n");
+        System.out.println("UC17 - Sort Bogie Names Using Arrays.sort()");
+        System.out.println("============================================\n");
 
         // Step 1: Create array
-        int[] capacities = {72, 56, 24, 70, 60};
+        String[] bogieNames = {"Sleeper", "AC Chair", "First Class", "General", "Luxury"};
 
         // Step 2: Print original
-        System.out.println("Original Capacities:");
-        for (int c : capacities) {
-            System.out.print(c + " ");
-        }
+        System.out.println("Original Bogie Names:");
+        System.out.println(Arrays.toString(bogieNames));
 
-        System.out.println("\n");
+        System.out.println();
 
-        // Step 3: Bubble Sort
-        int n = capacities.length;
-
-        for (int i = 0; i < n - 1; i++) {
-            for (int j = 0; j < n - i - 1; j++) {
-
-                if (capacities[j] > capacities[j + 1]) {
-                    // swap
-                    int temp = capacities[j];
-                    capacities[j] = capacities[j + 1];
-                    capacities[j + 1] = temp;
-                }
-            }
-        }
+        // Step 3: Sort using Arrays.sort()
+        Arrays.sort(bogieNames);
 
         // Step 4: Print sorted
-        System.out.println("Sorted Capacities (Ascending):");
-        for (int c : capacities) {
-            System.out.print(c + " ");
-        }
+        System.out.println("Sorted Bogie Names (Alphabetical):");
+        System.out.println(Arrays.toString(bogieNames));
 
-        System.out.println("\n\nUC16 sorting completed...");
+        System.out.println("\nUC17 sorting completed...");
     }
 }

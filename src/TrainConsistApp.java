@@ -1,33 +1,37 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class TrainConsistApp {
+
     public static void main(String[] args) {
-        // 1. Create a HashMap to store bogie-capacity information
-        // Key: Bogie Name (String), Value: Capacity (Integer)
-        HashMap<String, Integer> bogieCapacities = new HashMap<>();
 
-        // 2 & 3. Insert capacity values using the put() method
-        bogieCapacities.put("Sleeper", 72);
-        bogieCapacities.put("AC Chair", 56);
-        bogieCapacities.put("First Class", 24);
-        bogieCapacities.put("Rectangular Goods", 100); // Example load capacity
-        bogieCapacities.put("Cylindrical Goods", 80);
+        System.out.println("UC7 - Sort Bogies by Capacity (Comparator)");
+        System.out.println("===========================================\n");
 
-        System.out.println("--- Bogie to Capacity Mapping ---");
+        // Step 1: Create HashMap (Bogie → Capacity)
+        Map<String, Integer> bogies = new HashMap<>();
+        bogies.put("Sleeper", 72);
+        bogies.put("AC Chair", 56);
+        bogies.put("First Class", 24);
+        bogies.put("General", 90);
 
-        // 4 & 5. Iterate through the map using entrySet() to display details
-        for (Map.Entry<String, Integer> entry : bogieCapacities.entrySet()) {
-            String bogieName = entry.getKey();
-            Integer capacity = entry.getValue();
-            System.out.println("Bogie: " + bogieName + " | Capacity: " + capacity);
+        // Step 2: Print before sorting
+        System.out.println("Before Sorting:");
+        for (Map.Entry<String, Integer> entry : bogies.entrySet()) {
+            System.out.println(entry.getKey() + " -> " + entry.getValue());
         }
 
-        // 6. Fast Lookup Example (Demonstrating Key Benefit)
-        String searchBogie = "Sleeper";
-        if (bogieCapacities.containsKey(searchBogie)) {
-            System.out.println("\nFast Lookup: The capacity of " + searchBogie +
-                    " is " + bogieCapacities.get(searchBogie) + " seats.");
+        // Step 3: Convert to List for sorting
+        List<Map.Entry<String, Integer>> list = new ArrayList<>(bogies.entrySet());
+
+        // Step 4: Sort using Comparator (by value)
+        list.sort(Comparator.comparingInt(Map.Entry::getValue));
+
+        // Step 5: Print after sorting
+        System.out.println("\nAfter Sorting by Capacity:");
+        for (Map.Entry<String, Integer> entry : list) {
+            System.out.println(entry.getKey() + " -> " + entry.getValue());
         }
+
+        System.out.println("\nUC7 sorting completed...");
     }
 }
